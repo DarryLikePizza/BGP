@@ -153,7 +153,7 @@ public class AsSkip {
                 AsNodeBean asNBB = asLocationDictionary.get(chinaAs);
                 if(asNBB==null) continue;
                 beginNation = asNBB.getNationName();
-                for (; t < k && t < asListSize - 1; t++){
+                for (; t < asListSize - 1; t++){
                     if(Objects.equals(asList[t], chinaAs)){
                         hasChinaAs = 1;
                         i = t;
@@ -163,7 +163,7 @@ public class AsSkip {
                 if(hasChinaAs == 0) continue;
             }
 
-            for (; i < k && i < asListSize - 1; i++) {
+            for (; i < t+2 && i < asListSize - 1; i++) {
                 // del As which info not in the dict 723
                 AsNodeBean asNB = asLocationDictionary.get(asList[i+1]);
                 if(asNB==null){
@@ -572,8 +572,8 @@ public class AsSkip {
 
     public static void main(String[] args) throws FileNotFoundException, JSONException {
         String centralAs = "14315";
-        String inPath = "/Users/mac/desktop/BGP/input_file/snapJava1000.csv";
-        String asInfoDictPath = "/Users/mac/desktop/BGP/input_file/as_country_with_geo.csv";
+        String inPath = "/Users/mac/Documents/BGP/input_file/snapJava1000.csv";
+        String asInfoDictPath = "/Users/mac/Documents/BGP/input_file/as_country_with_geo.csv";
         int skipTimes = 2;
 
         AsSkip asSkip = new AsSkip();
@@ -581,8 +581,8 @@ public class AsSkip {
 
         // LiDa's project
         List<AsDetectBean> asDetectDataset = asSkip.ReadAsDetectData(inPath, centralAs);
-        AsResultBean asResultBean = asSkip.AsSkipInfoOutput(centralAs, asDetectDataset, asLocationDictionary, skipTimes);
-        System.out.println(asResultBean);
+//        AsResultBean asResultBean = asSkip.AsSkipInfoOutput(centralAs, asDetectDataset, asLocationDictionary, skipTimes);
+//        System.out.println(asResultBean);
         // more Da project
         AsResultBean asResultBean2 = asSkip.ChinaSkipOutput(centralAs, asDetectDataset, asLocationDictionary, skipTimes, "45352", true);
         System.out.println(asResultBean2);
@@ -597,12 +597,12 @@ public class AsSkip {
         BigInteger limitCount = new BigInteger("1000000");
         BigInteger limitCountForNode = new BigInteger("10000");
         // one
-        List<AsLineBean> asOneLineList = asResultBean.getAsOneSkipLineList();
+        List<AsLineBean> asOneLineList = asResultBean2.getAsOneSkipLineList();
         String pieOneJson = asSkip.GetPieJson(asOneLineList, asLocationDictionary, limitCount, limitCountForNode);
         saveAsJson.saveJsonData(pieOneJson, filePathOne);
         System.out.println(pieOneJson);
         // two
-        List<AsLineBean> asTwoLineList = asResultBean.getAsTwoSkipLineList();
+        List<AsLineBean> asTwoLineList = asResultBean2.getAsTwoSkipLineList();
         String pieTwoJson = asSkip.GetPieJson(asTwoLineList, asLocationDictionary, limitCount, limitCountForNode);
         saveAsJson.saveJsonData(pieTwoJson, filePathTwo);
         System.out.println(pieTwoJson);
@@ -613,12 +613,12 @@ public class AsSkip {
 
         // one
         int k = 1;
-        String mapResult = asSkip.GetMapJson(centralAs, asLocationDictionary, asResultBean, limit, k);
+        String mapResult = asSkip.GetMapJson("45352", asLocationDictionary, asResultBean2, limit, k);
         saveAsJson.saveJsonData(mapResult, mapFilePathOne);
         System.out.println(mapResult);
         // two
         int k2 = 2;
-        String mapResult2 = asSkip.GetMapJson(centralAs, asLocationDictionary, asResultBean, limit, k2);
+        String mapResult2 = asSkip.GetMapJson("45352", asLocationDictionary, asResultBean2, limit, k2);
         saveAsJson.saveJsonData(mapResult2, mapFilePathOne);
         System.out.println(mapResult2);
     }
