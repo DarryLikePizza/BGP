@@ -163,7 +163,7 @@ public class AsSkip {
                 if(hasChinaAs == 0) continue;
             }
 
-            for (; i < t+2 && i < asListSize - 1; i++) {
+            for (; i < t+k && i < asListSize - 1; i++) {
                 // del As which info not in the dict 723
                 AsNodeBean asNB = asLocationDictionary.get(asList[i+1]);
                 if(asNB==null){
