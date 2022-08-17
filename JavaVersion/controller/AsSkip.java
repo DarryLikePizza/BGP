@@ -1,6 +1,7 @@
 package com.example.bgpm.controller;
 
 import com.example.bgpm.bean.*;
+import com.example.bgpm.utils.SaveAsFile;
 import com.example.bgpm.utils.SaveAsJson;
 import com.example.bgpm.utils.ljp.TwoHopsQuery;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -589,7 +590,7 @@ public class AsSkip {
         // LuZhiping's project
 //        AsResultBean asResultBean = asSkip.AsSkipInfoOutputLarge(centralAs, inPath, asLocationDictionary);
 
-        SaveAsJson saveAsJson = new SaveAsJson();
+        SaveAsFile saveAsFile = new SaveAsFile();
 
         // pie
         String filePathOne = "/Users/mac/desktop/onePie.json";
@@ -599,12 +600,12 @@ public class AsSkip {
         // one
         List<AsLineBean> asOneLineList = asResultBean2.getAsOneSkipLineList();
         String pieOneJson = asSkip.GetPieJson(asOneLineList, asLocationDictionary, limitCount, limitCountForNode);
-        saveAsJson.saveJsonData(pieOneJson, filePathOne);
+        saveAsFile.saveAsJson(pieOneJson, filePathOne);
         System.out.println(pieOneJson);
         // two
         List<AsLineBean> asTwoLineList = asResultBean2.getAsTwoSkipLineList();
         String pieTwoJson = asSkip.GetPieJson(asTwoLineList, asLocationDictionary, limitCount, limitCountForNode);
-        saveAsJson.saveJsonData(pieTwoJson, filePathTwo);
+        saveAsFile.saveAsJson(pieTwoJson, filePathTwo);
         System.out.println(pieTwoJson);
 
         // map
@@ -614,12 +615,12 @@ public class AsSkip {
         // one
         int k = 1;
         String mapResult = asSkip.GetMapJson("45352", asLocationDictionary, asResultBean2, limit, k);
-        saveAsJson.saveJsonData(mapResult, mapFilePathOne);
+        saveAsFile.saveAsJson(mapResult, mapFilePathOne);
         System.out.println(mapResult);
         // two
         int k2 = 2;
         String mapResult2 = asSkip.GetMapJson("45352", asLocationDictionary, asResultBean2, limit, k2);
-        saveAsJson.saveJsonData(mapResult2, mapFilePathOne);
+        saveAsFile.saveAsJson(mapResult2, mapFilePathOne);
         System.out.println(mapResult2);
     }
 }
